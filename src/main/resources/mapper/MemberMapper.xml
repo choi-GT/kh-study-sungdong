@@ -52,6 +52,7 @@
 	SELECT COUNT(*) AS CUT
 	FROM MEMBERSHIP
 	WHERE EMAIL = #{email}
+		AND ISUSE = 1
 </select>
 
 <update id="memberDrop" parameterType="com.example.demo.vo.MemberShipVO">
@@ -77,8 +78,17 @@
 				<if test="email != '' and !email.equals('')">
 					, EMAIL 	= #{email}
 				</if>
+				<if test="phonnumber != '' and !phonnumber.equals('')">
+					, PHONNUMBER = #{phonnumber}
+				</if>
 			</set>
 		WHERE idx = #{idx}
 	</update>
+	
+	
+	
+	
+	
+	
 
 </mapper>

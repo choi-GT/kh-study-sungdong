@@ -7,16 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.mapper.MemberMapper;
+
 import com.example.demo.payload.request.DropRequest;
+
 import com.example.demo.service.CrudService;
+
 import com.example.demo.vo.MemberShipVO;
 
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Service
+@Slf4j
 public class MemberService implements CrudService<MemberShipVO> {
 	
 	@Autowired
@@ -68,6 +73,14 @@ public class MemberService implements CrudService<MemberShipVO> {
 	    return true;
 	}
 	
+	/** 체크 이메일
+	 * 
+	 */
+	public boolean isEmailAvailable(String email) {
+        int count = mapper.checkEmail(email);
+        return count == 0 ? true : false; // 이메일이 사용 가능한 경우 0 반환
+    }
+		
 	/**
 	 * 회원정보 수정
 	 * @param request
@@ -92,9 +105,19 @@ public class MemberService implements CrudService<MemberShipVO> {
 			return false;
 		}
 		
-		if (!memberShipVO.getPassword().equals("")) {
-			memberShipVO.setPassword("");
-		}
+		// 이메일 사용 여부 체크
+	    int emailCount = mapper.checkEmail(memberShipVO.getEmail());
+	    log.info(String.valueOf(emailCount));
+	    if (emailCount > 0) {
+	        return true; // 이메일이 이미 사용 중일 경우 false 반환
+	    }
+		
+		
+//		if (!memberShipVO.getPassword().equals("")) {
+//			memberShipVO.setPassword("");
+//		}
+		
+		
 		
 		mapper.updateInfo(memberShipVO);
 		

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.StoreInfoMapper">
+
+    <insert id="insertItems" parameterType="java.util.HashMap">
+
+        INSERT INTO STORE_INFO (lastmodts, dtlstatenm, totepnum, wmeipcnt
+        , bplcnm, maneipcnt, isream, jtupsoasgnno
+        , faciltotscp, jtupsomainedf, multusnupsoyn
+        , clgenddt, sitearea, dcbymd, clgstdt
+        , trdstategbn, trdstatenm, apvcancelymd
+        , sitepostno, fctysiljobepcnt, opnsfteamcode
+        , sitetel, fctypdtjobepcnt, sitewhladdr
+        , dtlstategbn, rdnpostno, bdngownsenm, trdpjubnsenm
+        , homepage, monam, fctyowkepcnt, updategbn
+        , updatedt, apvpermymd, wtrsplyfacilsenm
+        , lvsenm, uptaenm, hoffepcnt, rdnwhladdr
+        , sntuptaenm, x, y, ropnymd, mgtno) VALUES (
+        #{lastmodts}, #{dtlstatenm}, #{totepnum}, #{wmeipcnt}
+        , #{bplcnm}, #{maneipcnt}, #{isream}, #{jtupsoasgnno}
+        , #{faciltotscp}, #{jtupsomainedf}, #{multusnupsoyn}
+        , #{clgenddt}, #{sitearea}, #{dcbymd}, #{clgstdt}
+        , #{trdstategbn}, #{trdstatenm}, #{apvcancelymd}
+        , #{sitepostno}, #{fctysiljobepcnt}, #{opnsfteamcode}
+        , #{sitetel}, #{fctypdtjobepcnt}, #{sitewhladdr}
+        , #{dtlstategbn}, #{rdnpostno}, #{bdngownsenm}, #{trdpjubnsenm}
+        , #{homepage}, #{monam}, #{fctyowkepcnt}, #{updategbn}
+        , #{updatedt}, #{apvpermymd}, #{wtrsplyfacilsenm}
+        , #{lvsenm}, #{uptaenm}, #{hoffepcnt}, #{rdnwhladdr}
+        , #{sntuptaenm}, #{x}, #{y}, #{ropnymd}, #{mgtno}
+        )
+    </insert>
+
+    <select id="selList" resultType="com.example.demo.vo.StoreInfoVO">
+        SELECT * FROM store_info
+    </select>
+
+</mapper>

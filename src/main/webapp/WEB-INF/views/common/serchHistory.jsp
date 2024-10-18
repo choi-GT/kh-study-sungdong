@@ -20,6 +20,7 @@
 			<tr>
 				<th>번호</th>
 				<th>순위</th>
+				<th>상호명</th>
 				<th>주소</th>
 				<th>비고</th>
 				
@@ -27,6 +28,8 @@
 		</thead>
 		<tbody>
 				<tr>
+					<td></td>
+					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>

@@ -14,7 +14,7 @@
         padding: 0;
       }
       header {
-        background-color: #ecaa2e;
+        background-color: #00D7FF;
         position: relative; /* header가 다른 요소 위에 표시되도록 설정 */
         z-index: 1; /* header의 z-index를 높여서 맨 위에 위치하게 함 */
       }
@@ -80,7 +80,7 @@
           display: flex;
           flex-direction: column;
           text-align: center;
-          background-color: rgba(0, 0, 0, 0.9);
+          background-color: rgba(0, 215, 255, 0.9);
           transition: all 0.5s;
         }
         .hamburger {

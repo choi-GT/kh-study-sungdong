@@ -1,20 +1,26 @@
 package com.example.demo.commonController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.service.impl.MemberService;
 import com.example.demo.vo.MemberShipVO;
+
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -27,7 +33,15 @@ public class CommonController {
 	
 	@Autowired
 	private MemberService memberService;
-//	
+	
+	@GetMapping("/main")
+	private ModelAndView main() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("common/map");
+		mav.addObject("title", "메인 페이지");
+		return mav;
+	}
+	
 	// 로그인 페이지
 	@RequestMapping("/login")
 	public ModelAndView login(
@@ -65,6 +79,8 @@ public class CommonController {
 		return mav;
 	}
 	
+	
+	
 	/**
 	 * 마이 페이지
 	 * @param request
@@ -83,6 +99,26 @@ public class CommonController {
 	}
 	
 	/**
+	 * 이메일 중복 확인
+	 * @param email
+	 * @return
+	 */
+	@GetMapping("/checkEmail/{email}")
+    public ResponseEntity<Boolean> checkEmail(@PathVariable String email) {
+        boolean isAvailable = memberService.isEmailAvailable(email);
+        return ResponseEntity.ok(isAvailable);
+    }
+	
+	/**
+	 * ID 찾기
+	 * @return
+	 */
+	@GetMapping("/findID")
+	public String findID() {
+		return "common/findID";
+	}
+	
+	/**
 	 * 사용자 정보 수정 페이지
 	 * @param request
 	 * @return
@@ -93,12 +129,13 @@ public class CommonController {
 		mav.setViewName("common/myInfo");
 		
 		HttpSession session = request.getSession();
-		MemberShipVO memberVO = (MemberShipVO) session.getAttribute("userInfo");
+		MemberShipVO memberShipVO = (MemberShipVO) session.getAttribute("userInfo");
 		
-		mav.addObject("userInfo", memberVO);
+		mav.addObject("userInfo", memberShipVO);
 		
 		return mav;
 	}
+	
 	
 	/**
 	 * 회원정보 수정
@@ -106,14 +143,35 @@ public class CommonController {
 	 * @param memberVO
 	 * @return
 	 */
+//	@PostMapping("/updateInfo")
+//	@ResponseBody
+//	public ResponseEntity<?> updateInfo(
+//			HttpServletRequest request,
+//			@RequestBody 
+//			@ModelAttribute MemberShipVO memberShipVO
+//			) {
+//		log.info(memberShipVO.toString());
+//		
+//		boolean result = memberService.updateInfo(request, memberShipVO);
+//		log.info(String.valueOf(result));
+//		ModelAndView mav = new ModelAndView();
+//		
+//		if (result) {
+//			mav.setViewName("redirect:/member/myPage");
+//		} else {
+//			mav.setViewName("forward:/member/myInfo");
+//		}
+//		
+//		return ResponseEntity.ok(result);
+//	}
 	@PostMapping("/updateInfo")
 	public ModelAndView updateInfo(
 			HttpServletRequest request,
-			@ModelAttribute MemberShipVO memberShipVO
+			@ModelAttribute MemberShipVO memberVO
 			) {
-		log.info(memberShipVO.toString());
+		log.info(memberVO.toString());
 		
-		boolean result = memberService.updateInfo(request, memberShipVO);
+		boolean result = memberService.updateInfo(request, memberVO);
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -125,6 +183,26 @@ public class CommonController {
 		
 		return mav;
 	}
+//	@PostMapping("/updateInfo")
+//	public ModelAndView updateInfo(
+//	        HttpServletRequest request,
+//	        @RequestBody MemberShipVO memberShipVO
+//	) {
+//	    log.info(memberShipVO.toString());
+//	    
+//	    boolean result = memberService.updateInfo(request, memberShipVO);
+//	    log.info(String.valueOf(result));
+//	    
+//	    ModelAndView mav = new ModelAndView();
+//	    
+//	    if (result) {
+//	        mav.setViewName("redirect:/member/myPage");
+//	    } else {
+//	        mav.setViewName("forward:/member/myInfo");
+//	    }
+//	    
+//	    return mav;
+//	}
 	
 	/**
 	 * 즐겨 찾기

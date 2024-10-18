@@ -52,7 +52,7 @@ public class MemberMapper {
 	 */
 	public int checkEmail(String email) {
 		return session.selectOne("member.checkEmail", email);
-	}
+	}	
 	
 	/**
 	 * 회원정보 변경
